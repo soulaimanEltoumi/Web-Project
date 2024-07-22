@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 export default function App() {
   return (
     <>
@@ -15,6 +16,7 @@ export default function App() {
 
         <Route path="/*" element={<NotFoundPage />} /> */}
       </Routes>
+      <Footer />
     </>
   );
 }
