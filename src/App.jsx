@@ -1,8 +1,18 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import React from "react";
+import { BrowserRouter as Routes, Switch, Route, Link } from "react-router-dom";
+import Homepage from "./pages/Homepage";
+export default function App() {
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        {/* <Route path="/about" element={<About />} />
+        <Route path="/market" element={<Market />} />
+        <Route path="/market/:id" element={<MarketDetail />} />
+        <Route path="/favourite-list" element={<FavouriteList />} />
 
-function App() {}
-
-export default App;
+        <Route path="/*" element={<NotFoundPage />} /> */}
+      </Routes>
+    </>
+  );
+}
