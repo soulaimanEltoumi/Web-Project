@@ -3,14 +3,15 @@ import { Routes, Route } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import About from "./pages/About";
 export default function App() {
   return (
     <>
       <Navbar />
       <Routes>
         <Route path="/" element={<Homepage />} />
-        {/* <Route path="/about" element={<About />} />
-        <Route path="/market" element={<Market />} />
+        <Route path="/about" element={<About />} />
+        {/* <Route path="/market" element={<Market />} />
         <Route path="/market/:id" element={<MarketDetail />} />
         <Route path="/favourite-list" element={<FavouriteList />} />
 
