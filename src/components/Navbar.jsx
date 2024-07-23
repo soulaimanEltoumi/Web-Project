@@ -1,72 +1,136 @@
-import React, { useState } from "react";
+import * as React from "react";
+import { styled, alpha } from "@mui/material/styles";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import InputBase from "@mui/material/InputBase";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
+import AccountCircle from "@mui/icons-material/AccountCircle";
 import { Link } from "react-router-dom";
+import { GoHeartFill } from "react-icons/go"; // Importar ícono de corazón
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [menuVisible, setMenuVisible] = useState(false);
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginRight: theme.spacing(2),
+  marginLeft: theme.spacing(3),
+  width: "auto",
+}));
 
-  const toggleMenu = () => {
-    setMenuVisible(!menuVisible);
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "20ch",
+  },
+}));
+
+export default function PrimarySearchAppBar() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const isMenuOpen = Boolean(anchorEl);
+
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
   };
 
-  return (
-    <nav className="bg-blue-500 p-4">
-      <div className="container mx-auto flex items-center justify-between">
-        <Link to="/" className="text-2xl font-bold text-white">
-          MyLogo
-        </Link>
-        <div className="ml-auto flex items-center">
-          <button
-            className="text-white focus:outline-none md:hidden"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16m-7 6h7"
-              ></path>
-            </svg>
-          </button>
-          <div className="relative ml-4">
-            <div className="h-12 w-12 cursor-pointer" onClick={toggleMenu}>
-              <img
-                className="md:ml-4 md:mt-0"
-                src="https://thumbs.dreamstime.com/z/icono-de-men%C3%BA-web-s%C3%ADmbolo-del-hamburguesa-vector-279634421.jpg?w=768"
-                alt="Icono de lista"
-              />
-            </div>
-            {menuVisible && (
-              <div className="absolute right-0 mt-2 w-48 rounded-lg border border-gray-200 bg-white shadow-lg">
-                <Link
-                  to="/login"
-                  className="block px-4 py-2 text-black hover:bg-gray-100"
-                >
-                  Log In
-                </Link>
-                <Link
-                  to="/favorites"
-                  className="block px-4 py-2 text-black hover:bg-gray-100"
-                >
-                  Favourites
-                </Link>
-              </div>
-            )}
-          </div>
-        </div>
-        <div
-          className={`md:flex ${isOpen ? "flex" : "hidden"} flex-col md:flex-row`}
-        ></div>
-      </div>
-    </nav>
-  );
-};
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
 
-export default Navbar;
+  const menuId = "primary-search-account-menu";
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose} component={Link} to="/profile">
+        Profile
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose} component={Link} to="/my-account">
+        My account
+      </MenuItem>
+    </Menu>
+  );
+
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <Link to="/" className="text-2xl font-bold text-white">
+            MyLogo
+          </Link>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ "aria-label": "search" }}
+            />
+          </Search>
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: "flex" }}>
+            <IconButton
+              size="large"
+              aria-label="show favorites"
+              color="inherit"
+              component={Link}
+              to="/favorites" // Añadir la ruta para favoritos
+            >
+              <GoHeartFill />
+            </IconButton>
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+          </Box>
+        </Toolbar>
+      </AppBar>
+      {renderMenu}
+    </Box>
+  );
+}
