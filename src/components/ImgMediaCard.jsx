@@ -7,7 +7,8 @@ export default function ImgMediaCard() {
       id: 1,
       image: "/images/url.png",
       name: "Mir",
-      description: "dfjaklöfjaölk",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus facilis blanditiis amet in, esse cum fugit omnis deserunt repudiandae quisquam porro pariatur vel ab ex. Quam quod quasi pariatur, necessitatibus non nihil illum, dolorum molestiae dolorem reiciendis cupiditate aliquid beatae sit aut sunt, cumque quae quis reprehenderit saepe possimus! Ipsum.",
       github: "https://github.com/Mirmahas",
       linkedin: "https://www.linkedin.com/in/mirmahas/",
     },
@@ -15,7 +16,8 @@ export default function ImgMediaCard() {
       id: 2,
       image: "/images/url.png",
       name: "Mirko",
-      description: "dfjaklöfjaölk",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus facilis blanditiis amet in, esse cum fugit omnis deserunt repudiandae quisquam porro pariatur vel ab ex. Quam quod quasi pariatur, necessitatibus non nihil illum, dolorum molestiae dolorem reiciendis cupiditate aliquid beatae sit aut sunt, cumque quae quis reprehenderit saepe possimus! Ipsum.",
       github: "https://github.com/mirkoeffe",
       linkedin: "https://www.linkedin.com/in/mirko-fede/",
     },
@@ -23,14 +25,15 @@ export default function ImgMediaCard() {
       id: 3,
       image: "/images/url.png",
       name: "Soulaiman",
-      description: "dfjaklöfjaölk",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus facilis blanditiis amet in, esse cum fugit omnis deserunt repudiandae quisquam porro pariatur vel ab ex. Quam quod quasi pariatur, necessitatibus non nihil illum, dolorum molestiae dolorem reiciendis cupiditate aliquid beatae sit aut sunt, cumque quae quis reprehenderit saepe possimus! Ipsum.",
       github: "https://github.com/soulaimanEltoumi",
       linkedin: "https://www.linkedin.com/in/soulaiman-eltoumi/",
     },
   ];
 
   return (
-    <div>
+    <>
       {cardData.map((card, index) => (
         <MediaCard
           key={index}
@@ -41,6 +44,6 @@ export default function ImgMediaCard() {
           linkedin={card.linkedin}
         />
       ))}
-    </div>
+    </>
   );
 }

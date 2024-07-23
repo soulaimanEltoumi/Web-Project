@@ -10,14 +10,17 @@ export default function About() {
   };
   return (
     <div>
-      <ImgMediaCard />
-
-      <button
-        className="w-30 mb-5 h-8 rounded bg-blue-500 p-1"
-        onClick={handleClick}
-      >
-        Go to Homepage
-      </button>
+      <div className="flex flex-row justify-evenly">
+        <ImgMediaCard />
+      </div>
+      <div className="flex justify-center">
+        <button
+          className="w-30 m-5 h-8 rounded bg-blue-500 p-1 text-center"
+          onClick={handleClick}
+        >
+          Go to Homepage
+        </button>
+      </div>
     </div>
   );
 }

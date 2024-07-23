@@ -17,7 +17,7 @@ export default function MediaCard({
   linkedin,
 }) {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345, margin: 5 }}>
       <CardMedia component="img" alt={name} height="140" image={image} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
