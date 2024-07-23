@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default function Footer() {
   const today = new Date();
   return (
-    <footer className="absolute bottom-0 w-full bg-gray-800 p-4 text-gray-100">
+    <footer className="fixed bottom-0 w-full bg-gray-800 p-4 text-gray-100">
       <div className="flex h-4 items-center justify-center gap-10">
         <p>&copy; {today.getFullYear()} All right reserved.</p>
         <Link to="/about">About Us</Link>
