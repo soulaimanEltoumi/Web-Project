@@ -4,10 +4,12 @@ import Homepage from "./pages/Homepage";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import About from "./pages/About";
+import Sidebar from "./components/Sidebar";
 export default function App() {
   return (
     <>
       <Navbar />
+      <Sidebar />
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/about" element={<About />} />
