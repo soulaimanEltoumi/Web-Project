@@ -5,6 +5,8 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import About from "./pages/About";
 import Sidebar from "./components/Sidebar";
+import Login from "./pages/Login";
+
 export default function App() {
   return (
     <>
@@ -13,6 +15,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/about" element={<About />} />
+        <Route path="/login" element={<Login />} />
         {/* <Route path="/market" element={<Market />} />
         <Route path="/market/:id" element={<MarketDetail />} />
         <Route path="/favourite-list" element={<FavouriteList />} />
