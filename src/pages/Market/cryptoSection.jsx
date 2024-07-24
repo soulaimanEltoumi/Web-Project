@@ -1,50 +1,52 @@
+// CryptoSection.jsx
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom"; // Import Link for navigation
 
 function CryptoSection() {
-  const [cryptoData, setCryptoData] = useState([]);
+  const [cryptoExchanges, setCryptoExchanges] = useState([]);
   const [error, setError] = useState(null);
-  const apiKey = import.meta.env.VITE_API_KEY;
+  const apiKey = import.meta.env.VITE_FINNHUB_API_KEY;
 
   useEffect(() => {
-    const fetchCryptoData = async () => {
+    const fetchCryptoExchanges = async () => {
       try {
         const response = await fetch(
-          `https://finnhub.io/api/v1/crypto/symbol?token=${apiKey}`,
+          `https://finnhub.io/api/v1/crypto/exchange?token=${apiKey}`,
         );
-
-        if (response.status === 422) {
-          throw new Error(
-            "Unprocessable Entity: The server understands the content type but was unable to process the request.",
-          );
-        }
-
         if (!response.ok) {
-          // Obtener el mensaje de error del servidor
-          const errorData = await response.json();
-          throw new Error(errorData.message || "Error fetching crypto data");
+          throw new Error("Error fetching crypto exchanges");
         }
-
         const data = await response.json();
-        setCryptoData(data);
+        console.log("Fetched crypto exchanges:", data); // Debugging line
+        setCryptoExchanges(data);
       } catch (error) {
-        setError(error.message || "Error fetching crypto data");
-        console.error("Error fetching crypto data:", error);
+        setError("Error fetching crypto exchanges");
+        console.error("Error fetching crypto exchanges:", error);
       }
     };
 
-    fetchCryptoData();
+    fetchCryptoExchanges();
   }, [apiKey]);
 
   return (
-    <div>
-      <h2 className="mb-4 text-xl font-semibold">Cryptocurrencies</h2>
+    <div className="p-8">
+      <h2 className="mb-4 text-xl font-semibold">Available Crypto Exchanges</h2>
       {error && <p className="text-red-500">{error}</p>}
       <ul>
-        {cryptoData.map((crypto) => (
-          <li key={crypto.symbol} className="mb-2">
-            {crypto.name} ({crypto.symbol})
-          </li>
-        ))}
+        {cryptoExchanges.length > 0 ? (
+          cryptoExchanges.map((exchange, index) => (
+            <li key={index} className="mb-2">
+              <Link
+                to={`/crypto-details/${exchange}`}
+                className="text-blue-500 hover:underline"
+              >
+                {exchange}
+              </Link>
+            </li>
+          ))
+        ) : (
+          <p>Loading crypto exchanges...</p>
+        )}
       </ul>
     </div>
   );
