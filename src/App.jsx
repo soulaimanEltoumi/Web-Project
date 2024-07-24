@@ -6,6 +6,8 @@ import Footer from "./components/Footer";
 import About from "./pages/About";
 import Sidebar from "./components/Sidebar";
 import Login from "./pages/Login";
+
+import Login from "./pages/Login";
 export default function App() {
   return (
     <>
