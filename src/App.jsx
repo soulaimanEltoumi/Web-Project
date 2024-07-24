@@ -17,8 +17,8 @@ export default function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/about" element={<About />} />
         <Route path="/market" element={<Market />} />
-        {/* <Route path="/market/:id" element={<MarketDetail />} />
         <Route path="/login" element={<Login />} />
+        {/* <Route path="/market/:id" element={<MarketDetail />} />
         {/* <Route path="/market" element={<Market />} />
         <Route path="/market/:id" element={<MarketDetail />} />
         <Route path="/favourite-list" element={<FavouriteList />} />
