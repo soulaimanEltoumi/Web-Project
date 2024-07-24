@@ -10,7 +10,6 @@ export default function App() {
   return (
     <>
       <Navbar />
-      <Sidebar />
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/about" element={<About />} />
@@ -21,6 +20,7 @@ export default function App() {
 
         <Route path="/*" element={<NotFoundPage />} /> */}
       </Routes>
+
       <Footer />
     </>
   );

@@ -42,12 +42,9 @@ const Sidebar = () => {
             onChange={(e) => setFilterText(e.target.value)}
           />
           <div className="mt-4 space-y-2">
-            {/* Muestra componentes filtrados basados en filterText */}
-            {/* Ejemplo de componentes a filtrar */}
             <div
               className={`${filterText === "" || "Component 1".toLowerCase().includes(filterText.toLowerCase()) ? "" : "hidden"}`}
             ></div>
-            {/* Agrega más componentes según sea necesario */}
           </div>
         </div>
       </div>

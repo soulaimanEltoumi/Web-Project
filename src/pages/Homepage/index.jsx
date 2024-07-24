@@ -12,6 +12,7 @@ import {
   TimeScale,
 } from "chart.js";
 import "chartjs-adapter-date-fns";
+import Sidebar from "../../components/Sidebar";
 
 // Register ChartJS components
 ChartJS.register(
