@@ -12,6 +12,7 @@ import {
   TimeScale,
 } from "chart.js";
 import "chartjs-adapter-date-fns";
+import axios from "axios";
 
 // Register ChartJS components
 ChartJS.register(
@@ -30,6 +31,7 @@ function Homepage() {
   const [selectedSymbol, setSelectedSymbol] = useState(null);
   const [chartData, setChartData] = useState(null);
   const [error, setError] = useState(null);
+  const [news, setNews] = useState([]);
   const apiKey = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
@@ -71,11 +73,10 @@ function Homepage() {
       if (!selectedSymbol) return;
 
       try {
-        // Simulated Data - Replace with actual historical data fetching if available
         const simulatedDates = Array.from({ length: 30 }, (_, i) => {
           const date = new Date();
           date.setDate(date.getDate() - i);
-          return date.toISOString(); // ISO format for dates
+          return date.toISOString();
         }).reverse();
 
         const simulatedPrices = Array.from(
@@ -106,6 +107,21 @@ function Homepage() {
     fetchChartData();
   }, [selectedSymbol]);
 
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const response = await axios.get(
+          `https://finnhub.io/api/v1/news?category=general&token=${apiKey}`,
+        );
+        setNews(response.data);
+      } catch (error) {
+        console.error("Error fetching news:", error);
+      }
+    };
+
+    fetchNews();
+  }, [apiKey]);
+
   const handleSymbolChange = (symbol) => {
     setSelectedSymbol(symbol);
   };
@@ -119,7 +135,9 @@ function Homepage() {
           {symbolData.map((item) => (
             <div
               key={item.symbol}
-              className={`cursor-pointer rounded-lg bg-white p-6 shadow-md ${item.symbol === selectedSymbol ? "border-2 border-blue-500" : ""}`}
+              className={`cursor-pointer rounded-lg bg-white p-6 shadow-md ${
+                item.symbol === selectedSymbol ? "border-2 border-blue-500" : ""
+              }`}
               onClick={() => handleSymbolChange(item.symbol)}
             >
               <h2 className="mb-2 text-lg font-semibold">{item.description}</h2>
@@ -154,7 +172,7 @@ function Homepage() {
                   type: "time",
                   time: {
                     unit: "day",
-                    tooltipFormat: "ll", // 'll' for a more human-readable date
+                    tooltipFormat: "ll",
                   },
                   title: {
                     display: true,
@@ -175,6 +193,30 @@ function Homepage() {
       ) : (
         <p>Loading chart data...</p>
       )}
+
+      {/* News Section */}
+      <h2 className="mb-4 mt-8 text-xl font-bold">Latest News</h2>
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {news.slice(0, 6).map((article) => (
+          <div key={article.id} className="rounded-lg bg-white p-6 shadow-md">
+            <img
+              src={article.image}
+              alt={article.headline}
+              className="mb-4 h-40 w-full object-cover"
+            />
+            <h2 className="mb-2 text-lg font-semibold">{article.headline}</h2>
+            <p className="text-gray-600">{article.summary}</p>
+            <a
+              href={article.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-block text-blue-500"
+            >
+              Read more
+            </a>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
