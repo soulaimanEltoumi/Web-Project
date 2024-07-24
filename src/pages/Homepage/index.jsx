@@ -43,7 +43,7 @@ function Homepage() {
         }
         const symbols = await symbolResponse.json();
 
-        const pricePromises = symbols.slice(0, 5).map(async (symbol) => {
+        const pricePromises = symbols.slice(0, 6).map(async (symbol) => {
           const priceResponse = await fetch(
             `https://finnhub.io/api/v1/quote?symbol=${symbol.symbol}&token=${apiKey}`,
           );
