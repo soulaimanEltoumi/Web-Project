@@ -6,7 +6,7 @@ import Footer from "./components/Footer";
 import About from "./pages/About";
 import Login from "./pages/Login";
 import Market from "./pages/Market";
-import SignUp from "./pages/SignUp";
+import UserSignUp from "./components/SignUp";
 
 export default function App() {
   return (
@@ -17,7 +17,7 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/market" element={<Market />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signup" element={<UserSignUp />} />
         {/* <Route path="/market/:id" element={<MarketDetail />} />
         {/* <Route path="/market" element={<Market />} />
         <Route path="/market/:id" element={<MarketDetail />} />
