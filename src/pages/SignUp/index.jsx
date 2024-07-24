@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
+import bcrypt from "bcryptjs";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -32,16 +33,18 @@ export default function SignUp() {
     }
 
     try {
+      const salt = bcrypt.genSaltSync(10);
+      const hashed_password = bcrypt.hashSync(password, salt);
       const response = await axios.post(`http://localhost:5005/users`, {
         username,
-        password,
+        password: hashed_password,
         email,
       });
 
       if (response.status === 201) {
         setMessage("Registration successful");
         setTimeout(() => {
-          navigate("/signin");
+          navigate("/login");
         }, 1000);
         return;
       }
@@ -63,6 +66,7 @@ export default function SignUp() {
           alignItems: "center",
         }}
       >
+        <div className="my-2 text-center">{message}</div>
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
@@ -117,14 +121,13 @@ export default function SignUp() {
               </Link>
             </Grid>
             <Grid item>
-              <NavLink to="/signup" className="text-blue-400">
+              <NavLink to="/login" className="text-blue-400">
                 {"Already have an account? Sign In"}
               </NavLink>
             </Grid>
           </Grid>
         </Box>
       </Box>
-      <div className="my-2 text-center">{message}</div>
     </Container>
   );
 }

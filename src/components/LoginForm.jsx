@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
+import bcrypt from "bcryptjs";
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -31,11 +32,16 @@ export default function SignIn() {
     }
 
     try {
-      const response = await axios.get(
-        `http://localhost:5005/users?username=${username}&password=${password}`,
+      const foundUser = await axios.get(
+        `http://localhost:5005/users?username=${username}`,
       );
-
-      if (response.data.length) {
+      if (!foundUser) {
+        setMessage("User not found");
+        return;
+      }
+      const hashedPassword = foundUser.data[0].password;
+      const passwordMatch = bcrypt.compareSync(password, hashedPassword);
+      if (passwordMatch) {
         setMessage("Login successful");
         setTimeout(() => {
           navigate("/");
