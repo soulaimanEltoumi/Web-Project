@@ -13,7 +13,6 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
-import bcrypt from "bcryptjs";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -28,23 +27,22 @@ export default function SignUp() {
     };
     const { username, password, email } = data;
     if (!username || !password || !email) {
-      setMessage("Username, Password and Email are required");
+      setMessage("All fields are required");
       return;
     }
 
     try {
-      const salt = bcrypt.genSaltSync(10);
-      const hashed_password = bcrypt.hashSync(password, salt);
-      const response = await axios.post(`http://localhost:5005/users`, {
+      const response = await axios.post("http://localhost:5005/users", {
         username,
-        password: hashed_password,
+        password,
         email,
       });
 
       if (response.status === 201) {
         setMessage("Registration successful");
+        localStorage.setItem("isLoggedIn", "true");
         setTimeout(() => {
-          navigate("/login");
+          navigate("/");
         }, 1000);
         return;
       }
@@ -66,12 +64,11 @@ export default function SignUp() {
           alignItems: "center",
         }}
       >
-        <div className="my-2 text-center">{message}</div>
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign Up
+          Sign up
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
@@ -91,7 +88,6 @@ export default function SignUp() {
             label="Password"
             type="password"
             id="password"
-            autoComplete="current-password"
           />
           <TextField
             margin="normal"
@@ -115,19 +111,15 @@ export default function SignUp() {
             Sign Up
           </Button>
           <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
             <Grid item>
-              <NavLink to="/login" className="text-blue-400">
+              <NavLink to="/signin" className="text-blue-400">
                 {"Already have an account? Sign In"}
               </NavLink>
             </Grid>
           </Grid>
         </Box>
       </Box>
+      <div className="my-2 text-center">{message}</div>
     </Container>
   );
 }

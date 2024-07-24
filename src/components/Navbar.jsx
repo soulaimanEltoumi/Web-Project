@@ -55,6 +55,7 @@ export default function PrimarySearchAppBar() {
   const location = useLocation();
 
   const isMenuOpen = Boolean(anchorEl);
+  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -65,30 +66,43 @@ export default function PrimarySearchAppBar() {
   };
 
   const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose} component={Link} to="/profile">
-        Profile
-      </MenuItem>
-      <MenuItem onClick={handleMenuClose} component={Link} to="/my-account">
-        My account
-      </MenuItem>
-    </Menu>
-  );
+  const renderMenuItems = isLoggedIn
+    ? [
+        <MenuItem
+          key="profile"
+          onClick={handleMenuClose}
+          component={Link}
+          to="/profile"
+        >
+          Profile
+        </MenuItem>,
+        <MenuItem
+          key="logout"
+          onClick={handleMenuClose}
+          component={Link}
+          to="/"
+        >
+          Log Out
+        </MenuItem>,
+      ]
+    : [
+        <MenuItem
+          key="login"
+          onClick={handleMenuClose}
+          component={Link}
+          to="/login"
+        >
+          Login
+        </MenuItem>,
+        <MenuItem
+          key="signup"
+          onClick={handleMenuClose}
+          component={Link}
+          to="/signup"
+        >
+          Signup
+        </MenuItem>,
+      ];
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -135,7 +149,23 @@ export default function PrimarySearchAppBar() {
           </Box>
         </Toolbar>
       </AppBar>
-      {renderMenu}
+      <Menu
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        id={menuId}
+        keepMounted
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        open={isMenuOpen}
+        onClose={handleMenuClose}
+      >
+        {renderMenuItems}
+      </Menu>
     </Box>
   );
 }
