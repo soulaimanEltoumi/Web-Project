@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import {
@@ -12,7 +13,11 @@ import {
   TimeScale,
 } from "chart.js";
 import "chartjs-adapter-date-fns";
+<<<<<<< HEAD
 import axios from "axios";
+=======
+import { TwitterTimelineEmbed } from "react-twitter-embed";
+>>>>>>> dev
 
 // Register ChartJS components
 ChartJS.register(
@@ -194,6 +199,7 @@ function Homepage() {
         <p>Loading chart data...</p>
       )}
 
+<<<<<<< HEAD
       {/* News Section */}
       <h2 className="mb-4 mt-8 text-xl font-bold">Latest News</h2>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -216,6 +222,19 @@ function Homepage() {
             </a>
           </div>
         ))}
+=======
+      <div className="mx-auto my-10 flex justify-center">
+        <TwitterTimelineEmbed
+          onLoad={function noRefCheck() {}}
+          options={{
+            height: 400,
+            width: 600,
+          }}
+          screenName="Investingcom"
+          sourceType="widget"
+          theme="light"
+        />
+>>>>>>> dev
       </div>
     </div>
   );

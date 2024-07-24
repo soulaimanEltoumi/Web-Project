@@ -10,7 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { GoHeartFill } from "react-icons/go"; // Importar ícono de corazón
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -52,6 +52,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const location = useLocation();
 
   const isMenuOpen = Boolean(anchorEl);
 
@@ -96,15 +97,19 @@ export default function PrimarySearchAppBar() {
           <Link to="/" className="text-2xl font-bold text-white">
             MyLogo
           </Link>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
+          {location.pathname === "/" ||
+          location.pathname === "/market" ||
+          location.pathname === "/favourite-list" ? (
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
+          ) : null}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: "flex" }}>
             <IconButton
