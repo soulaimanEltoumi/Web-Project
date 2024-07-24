@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import Sidebar from "../../components/Sidebar";
 import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import {
@@ -14,7 +13,7 @@ import {
   TimeScale,
 } from "chart.js";
 import "chartjs-adapter-date-fns";
-import Sidebar from "../../components/Sidebar";
+import { TwitterTimelineEmbed } from "react-twitter-embed";
 
 // Register ChartJS components
 ChartJS.register(
@@ -178,6 +177,19 @@ function Homepage() {
       ) : (
         <p>Loading chart data...</p>
       )}
+
+      <div className="mx-auto my-10 flex justify-center">
+        <TwitterTimelineEmbed
+          onLoad={function noRefCheck() {}}
+          options={{
+            height: 400,
+            width: 600,
+          }}
+          screenName="Investingcom"
+          sourceType="widget"
+          theme="light"
+        />
+      </div>
     </div>
   );
 }
