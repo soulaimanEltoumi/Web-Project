@@ -26,7 +26,7 @@ function CryptoDetailsPage() {
   const { symbol } = useParams(); // Obtiene el símbolo de la criptomoneda de la URL
   const [cryptoQuote, setCryptoQuote] = useState(null);
   const [error, setError] = useState(null);
-  const apiKey = import.meta.env.VITE_API_KEY;
+  const apiKey = import.meta.env.VITE_FINNHUB_API_KEY;
 
   useEffect(() => {
     const fetchCryptoQuote = async () => {

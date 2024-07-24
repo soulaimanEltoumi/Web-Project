@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"; // Import Link for navigation
 function CryptoSection() {
   const [cryptoExchanges, setCryptoExchanges] = useState([]);
   const [error, setError] = useState(null);
-  const apiKey = import.meta.env.VITE_API_KEY;
+  const apiKey = import.meta.env.VITE_FINNHUB_API_KEY;
 
   useEffect(() => {
     const fetchCryptoExchanges = async () => {

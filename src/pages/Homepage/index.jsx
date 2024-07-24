@@ -13,11 +13,8 @@ import {
   TimeScale,
 } from "chart.js";
 import "chartjs-adapter-date-fns";
-<<<<<<< HEAD
 import axios from "axios";
-=======
 import { TwitterTimelineEmbed } from "react-twitter-embed";
->>>>>>> dev
 
 // Register ChartJS components
 ChartJS.register(
@@ -37,7 +34,7 @@ function Homepage() {
   const [chartData, setChartData] = useState(null);
   const [error, setError] = useState(null);
   const [news, setNews] = useState([]);
-  const apiKey = import.meta.env.VITE_API_KEY;
+  const apiKey = import.meta.env.VITE_FINNHUB_API_KEY;
 
   useEffect(() => {
     const fetchSymbolData = async () => {
@@ -199,7 +196,6 @@ function Homepage() {
         <p>Loading chart data...</p>
       )}
 
-<<<<<<< HEAD
       {/* News Section */}
       <h2 className="mb-4 mt-8 text-xl font-bold">Latest News</h2>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -222,19 +218,6 @@ function Homepage() {
             </a>
           </div>
         ))}
-=======
-      <div className="mx-auto my-10 flex justify-center">
-        <TwitterTimelineEmbed
-          onLoad={function noRefCheck() {}}
-          options={{
-            height: 400,
-            width: 600,
-          }}
-          screenName="Investingcom"
-          sourceType="widget"
-          theme="light"
-        />
->>>>>>> dev
       </div>
     </div>
   );
