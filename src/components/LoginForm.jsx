@@ -1,64 +1,136 @@
-import React from "react";
-import Login, { Render } from "react-login-page";
-import Logo from "react-login-page/logo";
+import { useState } from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import axios from "axios";
+import { NavLink, useNavigate } from "react-router-dom";
 
-const Demo = () => {
+function Copyright(props) {
   return (
-    <Login>
-      <Render>
-        {({ fields, buttons, blocks, $$index }) => {
-          return (
-            <div className="mx-auto my-4 max-w-md rounded-md border-2 border-solid border-black bg-gray-600">
-              <div className="flex flex-col justify-center p-10">
-                <header className="m-4 flex justify-center">
-                  {blocks.logo} {blocks.title}
-                </header>
-                <div className="m-4 flex justify-center">
-                  <label>{fields.username}</label>
-                </div>
-                <div className="flex justify-center">
-                  <label>{fields.password}</label>
-                </div>
-                <div className="m-4 flex justify-center">
-                  {buttons.submit}
-                  {buttons.reset}
-                </div>
-              </div>
-            </div>
-          );
-        }}
-      </Render>
-      <Login.Block keyname="logo" tagName="span">
-        <Logo />
-      </Login.Block>
-      <Login.Block keyname="title" tagName="span">
-        Login
-      </Login.Block>
-      <Login.Input
-        keyname="username"
-        placeholder="Please enter username"
-        className="rounded-md border border-solid border-black"
-      />
-      <Login.Input
-        keyname="password"
-        placeholder="Please enter password"
-        className="rounded-md border border-solid border-black"
-      />
-      <Login.Button
-        keyname="submit"
-        type="submit"
-        className="m-2 w-20 rounded-md border-2 border-solid border-black bg-slate-100"
-      >
-        Submit
-      </Login.Button>
-      <Login.Button
-        keyname="reset"
-        type="reset"
-        className="m-2 w-20 rounded-md border-2 border-solid border-black bg-slate-100"
-      >
-        Reset
-      </Login.Button>
-    </Login>
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
   );
-};
-export default Demo;
+}
+
+export default function SignIn() {
+  const navigate = useNavigate();
+  const [message, setMessage] = useState();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    let data = new FormData(event.currentTarget);
+    data = {
+      username: data.get("username"),
+      password: data.get("password"),
+    };
+    const { username, password } = data;
+    if (!username || !password) {
+      setMessage("Username and Password are required");
+      return;
+    }
+
+    try {
+      const response = await axios.get(
+        `http://localhost:5005/users?username=${username}&password=${password}`,
+      );
+
+      if (response.data.length) {
+        setMessage("Login successful");
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+        return;
+      }
+      setMessage("Invalid credentials");
+    } catch (error) {
+      console.error(error);
+      setMessage("Error occurred");
+    }
+  };
+
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label="Username"
+            name="username"
+            autoFocus
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+          />
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Sign In
+          </Button>
+          <Grid container>
+            <Grid item xs>
+              <Link href="#" variant="body2">
+                Forgot password?
+              </Link>
+            </Grid>
+            <Grid item>
+              <NavLink to="/signup" className="text-blue-400">
+                Don't have an account? Sign Up
+              </NavLink>
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
+      <div className="my-2 text-center">{message}</div>
+    </Container>
+  );
+}
