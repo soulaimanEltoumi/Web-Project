@@ -1,8 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import ImgMediaCard from "../../components/ImgMediaCard";
-import MediaCard from "../../components/MediaCard";
-import Sidebar from "../../components/Sidebar";
 
 export default function About() {
   const navigate = useNavigate();
@@ -11,8 +9,6 @@ export default function About() {
   };
   return (
     <div>
-      <Sidebar />
-
       <div className="flex flex-row justify-evenly">
         <ImgMediaCard />
       </div>

@@ -10,8 +10,6 @@ import UserSignUp from "./components/SignUp";
 import CryptoDetailsPage from "./pages/Details/CryptoDetailsPage";
 import ForexDetailsPage from "./pages/Details/ForexDetailsPage";
 import StocksDetailsPage from "./pages/Details/StockDetailsPage";
-
-import FavouriteList from "./pages/Favoritlist";
 import Notfoundpage from "./pages/Notfoundpage";
 
 export default function App() {
