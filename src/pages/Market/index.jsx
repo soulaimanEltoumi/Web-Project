@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import CryptoSection from "./cryptoSection";
 import ForexSection from "./forexSection";
 import StocksSection from "./stockSection";
