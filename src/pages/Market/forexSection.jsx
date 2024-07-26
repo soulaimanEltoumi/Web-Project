@@ -28,25 +28,29 @@ function ForexSection() {
   }, [apiKey]);
 
   return (
-    <div>
+    <div className="p-8">
       <h2 className="mb-4 text-xl font-semibold">Forex Pairs</h2>
       {error && <p className="text-red-500">{error}</p>}
-      <ul>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {forexSymbols.length > 0 ? (
           forexSymbols.map((pair, index) => (
-            <li key={index} className="mb-2">
+            <div
+              key={index}
+              className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-md"
+            >
               <Link
-                to={`/asset-details/${pair.symbol}/forex`}
-                className="text-blue-500 hover:underline"
+                to={`/details/forex/${pair.symbol}`}
+                className="block p-4 text-center hover:bg-gray-100"
               >
-                {pair.symbol} - {pair.description}
+                <h3 className="mb-2 text-lg font-semibold">{pair.symbol}</h3>
+                <p className="text-sm text-gray-500">{pair.description}</p>
               </Link>
-            </li>
+            </div>
           ))
         ) : (
           <p>Loading forex pairs...</p>
         )}
-      </ul>
+      </div>
     </div>
   );
 }
