@@ -11,11 +11,12 @@ import Menu from "@mui/material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { Link, useLocation } from "react-router-dom";
-import { GoHeartFill } from "react-icons/go"; // Importar ícono de corazón
+import { GoHeartFill } from "react-icons/go";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import logo from "../assets/logo.png";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -43,7 +44,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
+
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "20ch",
@@ -55,7 +56,7 @@ export default function PrimarySearchAppBar() {
   const location = useLocation();
 
   const isMenuOpen = Boolean(anchorEl);
-  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -65,7 +66,38 @@ export default function PrimarySearchAppBar() {
     setAnchorEl(null);
   };
 
+  const loggingOut = () => {
+    setTimeout(() => {
+      handleMenuClose();
+      sessionStorage.removeItem("isLoggedIn");
+    }, 1000);
+  };
+
   const menuId = "primary-search-account-menu";
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose} component={Link} to="/Log In">
+        Log In
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose} component={Link} to="/Signup">
+        Sign Up
+      </MenuItem>
+    </Menu>
+  );
   const renderMenuItems = isLoggedIn
     ? [
         <MenuItem
@@ -76,12 +108,7 @@ export default function PrimarySearchAppBar() {
         >
           Profile
         </MenuItem>,
-        <MenuItem
-          key="logout"
-          onClick={handleMenuClose}
-          component={Link}
-          to="/"
-        >
+        <MenuItem key="logout" onClick={loggingOut} component={Link} to="/">
           Log Out
         </MenuItem>,
       ]
@@ -108,8 +135,8 @@ export default function PrimarySearchAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Link to="/" className="text-2xl font-bold text-white">
-            MyLogo
+          <Link to="/" className="text-2xl font-bold">
+            <img src={logo} alt="Logo" style={{ height: "40px" }} />
           </Link>
           {location.pathname === "/" ||
           location.pathname === "/market" ||
@@ -131,7 +158,7 @@ export default function PrimarySearchAppBar() {
               aria-label="show favorites"
               color="inherit"
               component={Link}
-              to="/favorites" // Añadir la ruta para favoritos
+              to="/favorites"
             >
               <GoHeartFill />
             </IconButton>
@@ -149,6 +176,7 @@ export default function PrimarySearchAppBar() {
           </Box>
         </Toolbar>
       </AppBar>
+
       <Menu
         anchorEl={anchorEl}
         anchorOrigin={{
