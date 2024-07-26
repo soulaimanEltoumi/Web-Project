@@ -1,4 +1,3 @@
-// ForexSection.jsx
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
@@ -39,7 +38,7 @@ function ForexSection() {
               className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-md"
             >
               <Link
-                to={`/details/forex/${pair.symbol}`}
+                to={`/forex-details/${pair.symbol}`}
                 className="block p-4 text-center hover:bg-gray-100"
               >
                 <h3 className="mb-2 text-lg font-semibold">{pair.symbol}</h3>
