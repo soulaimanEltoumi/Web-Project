@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
+import bcrypt from "bcryptjs";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -32,11 +33,13 @@ export default function SignUp() {
     }
 
     try {
+      const salt = bcrypt.genSaltSync(10);
+      const hashed_password = bcrypt.hashSync(password, salt);
       const response = await axios.post(
         "https://json-server-backend-production.up.railway.app/users",
         {
           username,
-          password,
+          password: hashed_password,
           email,
         },
       );
