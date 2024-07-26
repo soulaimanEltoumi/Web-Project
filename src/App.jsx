@@ -9,6 +9,8 @@ import Market from "./pages/Market";
 import UserSignUp from "./components/SignUp";
 import AssetDetailsPage from "./pages/Details";
 import FavouriteList from "./pages/Favoritlist";
+import Notfoundpage from "./pages/Notfoundpage";
+
 export default function App() {
   return (
     <>
@@ -21,6 +23,7 @@ export default function App() {
         <Route path="/asset-details/:provider" element={<AssetDetailsPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<UserSignUp />} />
+        <Route path="*" element={<Notfoundpage />} />
         {/* <Route path="/market/:id" element={<MarketDetail />} />
         {/* <Route path="/market" element={<Market />} />
         <Route path="/market/:id" element={<MarketDetail />} />
