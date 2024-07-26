@@ -40,7 +40,7 @@ export default function SignUp() {
 
       if (response.status === 201) {
         setMessage("Registration successful");
-        localStorage.setItem("isLoggedIn", "true");
+        sessionStorage.setItem("isLoggedIn", "true");
         setTimeout(() => {
           navigate("/");
         }, 1000);

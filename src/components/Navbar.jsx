@@ -55,7 +55,7 @@ export default function PrimarySearchAppBar() {
   const location = useLocation();
 
   const isMenuOpen = Boolean(anchorEl);
-  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
