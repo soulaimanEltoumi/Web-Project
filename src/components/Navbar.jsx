@@ -12,6 +12,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { Link, useLocation } from "react-router-dom";
 import { GoHeartFill } from "react-icons/go";
+import Sidebar from "./Sidebar";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -176,6 +177,16 @@ export default function PrimarySearchAppBar() {
           </Box>
         </Toolbar>
       </AppBar>
+      <Sidebar />
+      <div
+        className="fixed left-0 top-0 h-screen w-12 cursor-pointer bg-transparent"
+        onMouseEnter={() =>
+          document.querySelector(".sidebar").classList.add("w-64")
+        }
+        onMouseLeave={() =>
+          document.querySelector(".sidebar").classList.remove("w-64")
+        }
+      />
       <Menu
         anchorEl={anchorEl}
         anchorOrigin={{
