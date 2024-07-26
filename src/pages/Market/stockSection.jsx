@@ -1,4 +1,3 @@
-// StockSection.jsx
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
@@ -26,21 +25,31 @@ function StockSection() {
   }, [apiKey]);
 
   return (
-    <div>
-      <h2 className="mb-4 text-xl font-semibold">Stocks</h2>
+    <div className="p-8">
+      <h2 className="mb-4 text-xl font-semibold">Available Stocks</h2>
       {error && <p className="text-red-500">{error}</p>}
-      <ul>
-        {stockData.map((stock) => (
-          <li key={stock.symbol} className="mb-2">
-            <Link
-              to={`/asset-details/${stock.symbol}/stock`}
-              className="text-blue-500 hover:underline"
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {stockData.length > 0 ? (
+          stockData.map((stock) => (
+            <div
+              key={stock.symbol}
+              className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-md"
             >
-              {stock.description} ({stock.symbol})
-            </Link>
-          </li>
-        ))}
-      </ul>
+              <Link
+                to={`/stocks-details/${stock.symbol}`}
+                className="block p-4 text-center hover:bg-gray-100"
+              >
+                <h3 className="mb-2 text-lg font-semibold">
+                  {stock.description}
+                </h3>
+                <p className="text-sm text-gray-500">{stock.symbol}</p>
+              </Link>
+            </div>
+          ))
+        ) : (
+          <p>Loading stock data...</p>
+        )}
+      </div>
     </div>
   );
 }
