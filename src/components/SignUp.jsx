@@ -32,11 +32,14 @@ export default function SignUp() {
     }
 
     try {
-      const response = await axios.post("http://localhost:5005/users", {
-        username,
-        password,
-        email,
-      });
+      const response = await axios.post(
+        "hhttps://json-server-backend-production.up.railway.app/users",
+        {
+          username,
+          password,
+          email,
+        },
+      );
 
       if (response.status === 201) {
         setMessage("Registration successful");

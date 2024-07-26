@@ -33,7 +33,7 @@ export default function SignIn() {
 
     try {
       const foundUser = await axios.get(
-        `http://localhost:5005/users?username=${username}`,
+        `https://json-server-backend-production.up.railway.app/users?username=${username}`,
       );
       if (!foundUser) {
         setMessage("User not found");
