@@ -43,7 +43,7 @@ export default function SignIn() {
       const passwordMatch = bcrypt.compareSync(password, hashedPassword);
       if (passwordMatch) {
         setMessage("Login successful");
-        localStorage.setItem("isLoggedIn", true);
+        sessionStorage.setItem("isLoggedIn", true);
         setTimeout(() => {
           navigate("/");
         }, 1000);
