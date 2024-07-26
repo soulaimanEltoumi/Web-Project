@@ -33,7 +33,7 @@ export default function SignUp() {
 
     try {
       const response = await axios.post(
-        "hhttps://json-server-backend-production.up.railway.app/users",
+        "https://json-server-backend-production.up.railway.app/users",
         {
           username,
           password,
