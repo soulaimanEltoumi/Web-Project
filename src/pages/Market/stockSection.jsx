@@ -1,9 +1,11 @@
+// StockSection.jsx
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-function StocksSection() {
+function StockSection() {
   const [stockData, setStockData] = useState([]);
   const [error, setError] = useState(null);
-  const apiKey = import.meta.env.VITE_API_KEY;
+  const apiKey = import.meta.env.VITE_FINNHUB_API_KEY;
 
   useEffect(() => {
     const fetchStockData = async () => {
@@ -30,7 +32,12 @@ function StocksSection() {
       <ul>
         {stockData.map((stock) => (
           <li key={stock.symbol} className="mb-2">
-            {stock.description} ({stock.symbol})
+            <Link
+              to={`/asset-details/${stock.symbol}/stock`}
+              className="text-blue-500 hover:underline"
+            >
+              {stock.description} ({stock.symbol})
+            </Link>
           </li>
         ))}
       </ul>
@@ -38,4 +45,4 @@ function StocksSection() {
   );
 }
 
-export default StocksSection;
+export default StockSection;

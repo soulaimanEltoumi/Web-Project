@@ -11,11 +11,12 @@ import Menu from "@mui/material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { Link, useLocation } from "react-router-dom";
-import { GoHeartFill } from "react-icons/go"; // Importar ícono de corazón
+import { GoHeartFill } from "react-icons/go";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import logo from "../assets/logo.png";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -43,7 +44,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
+
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "20ch",
@@ -55,6 +56,7 @@ export default function PrimarySearchAppBar() {
   const location = useLocation();
 
   const isMenuOpen = Boolean(anchorEl);
+  const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -62,6 +64,13 @@ export default function PrimarySearchAppBar() {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const loggingOut = () => {
+    setTimeout(() => {
+      handleMenuClose();
+      sessionStorage.removeItem("isLoggedIn");
+    }, 1000);
   };
 
   const menuId = "primary-search-account-menu";
@@ -81,34 +90,53 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {/* <MenuItem onClick={handleMenuClose} component={Link} to="/profile">
-        Profile
-      </MenuItem>
-      <MenuItem onClick={handleMenuClose} component={Link} to="/my-account">
-        My account
-      </MenuItem> */}
       <MenuItem onClick={handleMenuClose} component={Link} to="/Log In">
         Log In
       </MenuItem>
       <MenuItem onClick={handleMenuClose} component={Link} to="/Signup">
         Sign Up
       </MenuItem>
-
-      {/* <MenuItem onClick={handleMenuClose} component={Link} to="/Log In">
-       Log In
-      </MenuItem>
-      <MenuItem onClick={handleMenuClose} component={Link} to="/Signup">
-        Sign Up
-      </MenuItem> */}
     </Menu>
   );
+  const renderMenuItems = isLoggedIn
+    ? [
+        <MenuItem
+          key="profile"
+          onClick={handleMenuClose}
+          component={Link}
+          to="/profile"
+        >
+          Profile
+        </MenuItem>,
+        <MenuItem key="logout" onClick={loggingOut} component={Link} to="/">
+          Log Out
+        </MenuItem>,
+      ]
+    : [
+        <MenuItem
+          key="login"
+          onClick={handleMenuClose}
+          component={Link}
+          to="/login"
+        >
+          Login
+        </MenuItem>,
+        <MenuItem
+          key="signup"
+          onClick={handleMenuClose}
+          component={Link}
+          to="/signup"
+        >
+          Signup
+        </MenuItem>,
+      ];
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Link to="/" className="text-2xl font-bold text-white">
-            MyLogo
+          <Link to="/" className="text-2xl font-bold">
+            <img src={logo} alt="Logo" style={{ height: "40px" }} />
           </Link>
           {location.pathname === "/" ||
           location.pathname === "/market" ||
@@ -130,7 +158,7 @@ export default function PrimarySearchAppBar() {
               aria-label="show favorites"
               color="inherit"
               component={Link}
-              to="/favorites" // Añadir la ruta para favoritos
+              to="/favorites"
             >
               <GoHeartFill />
             </IconButton>
@@ -148,7 +176,23 @@ export default function PrimarySearchAppBar() {
           </Box>
         </Toolbar>
       </AppBar>
-      {renderMenu}
+      <Menu
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        id={menuId}
+        keepMounted
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        open={isMenuOpen}
+        onClose={handleMenuClose}
+      >
+        {renderMenuItems}
+      </Menu>
     </Box>
   );
 }

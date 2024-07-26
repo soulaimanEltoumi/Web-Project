@@ -1,51 +1,72 @@
+// CryptoSection.jsx
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom"; // Import Link for navigation
 
 function CryptoSection() {
-  const [cryptoData, setCryptoData] = useState([]);
+  const [symbols, setSymbols] = useState([]);
   const [error, setError] = useState(null);
-  const apiKey = import.meta.env.VITE_API_KEY;
+  const apiKey = import.meta.env.VITE_FINNHUB_API_KEY;
 
   useEffect(() => {
-    const fetchCryptoData = async () => {
+    const fetchSymbols = async () => {
       try {
-        const response = await fetch(
-          `https://finnhub.io/api/v1/crypto/symbol?token=${apiKey}`,
+        // Get all exchanges
+        const exchangesResponse = await fetch(
+          `https://finnhub.io/api/v1/crypto/exchange?token=${apiKey}`,
+        );
+        if (!exchangesResponse.ok) {
+          throw new Error("Error fetching crypto exchanges");
+        }
+        const exchangesData = await exchangesResponse.json();
+
+        // Fetch symbols for each exchange
+        const symbolsPromises = exchangesData.map((exchange) =>
+          fetch(
+            `https://finnhub.io/api/v1/crypto/symbol?exchange=${exchange}&token=${apiKey}`,
+          ).then((res) => res.json()),
         );
 
-        if (response.status === 422) {
-          throw new Error(
-            "Unprocessable Entity: The server understands the content type but was unable to process the request.",
-          );
-        }
+        // Wait for all symbols to be fetched
+        const allSymbols = await Promise.all(symbolsPromises);
+        // Flatten the array of arrays
+        const flattenedSymbols = allSymbols.flat();
 
-        if (!response.ok) {
-          // Obtener el mensaje de error del servidor
-          const errorData = await response.json();
-          throw new Error(errorData.message || "Error fetching crypto data");
-        }
-
-        const data = await response.json();
-        setCryptoData(data);
+        setSymbols(flattenedSymbols);
       } catch (error) {
-        setError(error.message || "Error fetching crypto data");
-        console.error("Error fetching crypto data:", error);
+        setError("Error fetching crypto symbols");
+        console.error("Error fetching crypto symbols:", error);
       }
     };
 
-    fetchCryptoData();
+    fetchSymbols();
   }, [apiKey]);
 
   return (
-    <div>
-      <h2 className="mb-4 text-xl font-semibold">Cryptocurrencies</h2>
+    <div className="p-8">
+      <h2 className="mb-4 text-xl font-semibold">Available Crypto Symbols</h2>
       {error && <p className="text-red-500">{error}</p>}
-      <ul>
-        {cryptoData.map((crypto) => (
-          <li key={crypto.symbol} className="mb-2">
-            {crypto.name} ({crypto.symbol})
-          </li>
-        ))}
-      </ul>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {symbols.length > 0 ? (
+          symbols.map((symbol, index) => (
+            <div
+              key={index}
+              className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-md"
+            >
+              <Link
+                to={`/crypto-details/${symbol.symbol}`}
+                className="block p-4 text-center hover:bg-gray-100"
+              >
+                <h3 className="mb-2 text-lg font-semibold">
+                  {symbol.displaySymbol}
+                </h3>
+                <p className="text-sm text-gray-500">{symbol.symbol}</p>
+              </Link>
+            </div>
+          ))
+        ) : (
+          <p>Loading crypto symbols...</p>
+        )}
+      </div>
     </div>
   );
 }

@@ -13,9 +13,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
-import bcrypt from "bcryptjs";
 
-export default function SignIn() {
+export default function SignUp() {
   const navigate = useNavigate();
   const [message, setMessage] = useState();
   const handleSubmit = async (event) => {
@@ -24,32 +23,33 @@ export default function SignIn() {
     data = {
       username: data.get("username"),
       password: data.get("password"),
+      email: data.get("email"),
     };
-    const { username, password } = data;
-    if (!username || !password) {
-      setMessage("Username and Password are required");
+    const { username, password, email } = data;
+    if (!username || !password || !email) {
+      setMessage("All fields are required");
       return;
     }
 
     try {
-      const foundUser = await axios.get(
-        `https://json-server-backend-production.up.railway.app/users?username=${username}`,
+      const response = await axios.post(
+        "https://json-server-backend-production.up.railway.app/users",
+        {
+          username,
+          password,
+          email,
+        },
       );
-      if (!foundUser) {
-        setMessage("User not found");
-        return;
-      }
-      const hashedPassword = foundUser.data[0].password;
-      const passwordMatch = bcrypt.compareSync(password, hashedPassword);
-      if (passwordMatch) {
-        setMessage("Login successful");
-        sessionStorage.setItem("isLoggedIn", true);
+
+      if (response.status === 201) {
+        setMessage("Registration successful");
+        sessionStorage.setItem("isLoggedIn", "true");
         setTimeout(() => {
           navigate("/");
         }, 1000);
         return;
       }
-      setMessage("Invalid credentials");
+      setMessage("Registration failed");
     } catch (error) {
       console.error(error);
       setMessage("Error occurred");
@@ -71,7 +71,7 @@ export default function SignIn() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Sign up
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
@@ -91,11 +91,19 @@ export default function SignIn() {
             label="Password"
             type="password"
             id="password"
-            autoComplete="current-password"
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
           />
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            control={<Checkbox value="allowExtraEmails" color="primary" />}
+            label="I want to receive inspiration, marketing promotions and updates via email."
           />
           <Button
             type="submit"
@@ -103,17 +111,12 @@ export default function SignIn() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign In
+            Sign Up
           </Button>
           <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
             <Grid item>
-              <NavLink to="/signup" className="text-blue-400">
-                {"Don't have an account? Sign Up"}
+              <NavLink to="/signin" className="text-blue-400">
+                {"Already have an account? Sign In"}
               </NavLink>
             </Grid>
           </Grid>
