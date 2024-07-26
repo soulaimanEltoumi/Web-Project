@@ -65,6 +65,13 @@ export default function PrimarySearchAppBar() {
     setAnchorEl(null);
   };
 
+  const loggingOut = () => {
+    setTimeout(() => {
+      handleMenuClose();
+      sessionStorage.removeItem("isLoggedIn");
+    }, 1000);
+  };
+
   const menuId = "primary-search-account-menu";
   const renderMenuItems = isLoggedIn
     ? [
@@ -76,12 +83,7 @@ export default function PrimarySearchAppBar() {
         >
           Profile
         </MenuItem>,
-        <MenuItem
-          key="logout"
-          onClick={handleMenuClose}
-          component={Link}
-          to="/"
-        >
+        <MenuItem key="logout" onClick={loggingOut} component={Link} to="/">
           Log Out
         </MenuItem>,
       ]
