@@ -14,27 +14,23 @@ import {
   IconButton,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useAuth } from "../../contexts/AuthContext";
 
 const ProfilePage = () => {
-  const [user, setUser] = useState(null);
+  const { user } = useAuth();
   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
-    // Fetch user data
-    fetch("https://json-server-backend-production.up.railway.app/users/1")
-      .then((response) => response.json())
-      .then((data) => setUser(data));
-
-    // Fetch user's favorite symbols
-    fetch(
-      "https://json-server-backend-production.up.railway.app/favorites?userId=1",
-    )
-      .then((response) => response.json())
-      .then((data) => setFavorites(data));
-  }, []);
+    if (user) {
+      fetch(
+        `https://json-server-backend-production.up.railway.app/favorites?userId=${user.id}`,
+      )
+        .then((response) => response.json())
+        .then((data) => setFavorites(data));
+    }
+  }, [user]);
 
   const handleRemoveFavorite = (id) => {
-    // Remove the item from the database
     fetch(
       `https://json-server-backend-production.up.railway.app/favorites/${id}`,
       {
