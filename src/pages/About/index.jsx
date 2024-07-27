@@ -14,7 +14,7 @@ export default function About() {
       </div>
       <div className="flex justify-center">
         <button
-          className="w-30 m-5 h-8 rounded bg-blue-500 p-1 text-center"
+          className="w-30 m-5 h-8 rounded bg-blue-500 p-1 text-center text-white"
           onClick={handleClick}
         >
           Go to Homepage
