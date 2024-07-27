@@ -130,7 +130,7 @@ function Homepage() {
 
   return (
     <div className="p-8">
-      <h1 className="mb-4 text-2xl font-bold">Finnhub Market Data</h1>
+      <h1 className="mb-4 text-2xl font-bold">SMM Market Data</h1>
       {error && <p className="text-red-500">{error}</p>}
       <div className="mb-4">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
