@@ -53,7 +53,6 @@ function StockSection() {
     const favorite = favorites.find((fav) => fav.symbolId === symbol);
 
     if (favorite) {
-      // Remove from favorites
       fetch(
         `https://json-server-backend-production.up.railway.app/favorites/${favorite.id}`,
         {
@@ -68,7 +67,6 @@ function StockSection() {
         }
       });
     } else {
-      // Add to favorites
       fetch(`https://json-server-backend-production.up.railway.app/favorites`, {
         method: "POST",
         headers: {
