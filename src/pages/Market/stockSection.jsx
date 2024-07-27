@@ -30,7 +30,7 @@ function StockSection() {
       {error && <p className="text-red-500">{error}</p>}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {stockData.length > 0 ? (
-          stockData.map((stock) => (
+          stockData.slice(0, 20).map((stock) => (
             <div
               key={stock.symbol}
               className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-md"
