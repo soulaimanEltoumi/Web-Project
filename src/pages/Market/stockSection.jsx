@@ -110,7 +110,7 @@ function StockSection() {
       <h2>Stock Section</h2>
       {error && <p>{error}</p>}
       <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
-        {stockData.slice(0, 15).map((stock) => (
+        {stockData.slice(0, 10).map((stock) => (
           <Card key={stock.symbol} sx={{ maxWidth: 345 }}>
             <CardHeader
               title={
