@@ -13,10 +13,13 @@ import Container from "@mui/material/Container";
 import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
 import bcrypt from "bcryptjs";
+import { useAuth } from "../contexts/AuthContext"; // Import the AuthContext
 
 export default function SignUp() {
   const navigate = useNavigate();
+  const { login } = useAuth(); // Get the login function from AuthContext
   const [message, setMessage] = useState();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     let data = new FormData(event.currentTarget);
@@ -46,6 +49,8 @@ export default function SignUp() {
       if (response.status === 201) {
         setMessage("Registration successful");
         sessionStorage.setItem("isLoggedIn", "true");
+        sessionStorage.setItem("userId", response.data.id); // Store the user ID in session storage
+        login(response.data); // Log in the user using AuthContext
         setTimeout(() => {
           navigate("/");
         }, 1000);
@@ -73,7 +78,7 @@ export default function SignUp() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Sign Up
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
@@ -93,19 +98,21 @@ export default function SignUp() {
             label="Password"
             type="password"
             id="password"
+            autoComplete="current-password"
           />
           <TextField
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
             name="email"
+            label="Email"
+            type="email"
+            id="email"
             autoComplete="email"
           />
           <FormControlLabel
-            control={<Checkbox value="allowExtraEmails" color="primary" />}
-            label="I want to receive inspiration, marketing promotions and updates via email."
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
           />
           <Button
             type="submit"
@@ -116,8 +123,8 @@ export default function SignUp() {
             Sign Up
           </Button>
           <Grid container>
-            <Grid item>
-              <NavLink to="/login" className="text-blue-500">
+            <Grid item xs>
+              <NavLink to="/login" variant="body2">
                 {"Already have an account? Sign In"}
               </NavLink>
             </Grid>

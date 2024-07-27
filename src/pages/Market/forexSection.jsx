@@ -9,12 +9,14 @@ import {
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Line } from "react-chartjs-2";
+import { useAuth } from "../../contexts/AuthContext";
 
 function ForexSection() {
   const [forexSymbols, setForexSymbols] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [error, setError] = useState(null);
   const apiKey = import.meta.env.VITE_FINNHUB_API_KEY;
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchForexSymbols = async () => {
@@ -73,7 +75,7 @@ function ForexSection() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: 1, // Assuming user ID is 1 for this example
+          userId: user.id,
           symbolId: symbol,
         }),
       }).then((response) => {
