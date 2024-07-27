@@ -35,7 +35,6 @@ export default function Market() {
               Stocks
             </button>
           </li>
-          {/* Añadir más botones según las secciones que necesites */}
         </ul>
       </nav>
 
@@ -43,7 +42,6 @@ export default function Market() {
         {activeSection === "crypto" && <CryptoSection />}
         {activeSection === "forex" && <ForexSection />}
         {activeSection === "stocks" && <StocksSection />}
-        {/* Añadir más condiciones para otras secciones */}
       </div>
     </div>
   );
