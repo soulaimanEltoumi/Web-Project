@@ -3,6 +3,7 @@ import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
+import CandlestickChartIcon from "@mui/icons-material/CandlestickChart";
 import IconButton from "@mui/material/IconButton";
 import InputBase from "@mui/material/InputBase";
 import MenuItem from "@mui/material/MenuItem";
@@ -10,7 +11,6 @@ import Menu from "@mui/material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { Link, useLocation } from "react-router-dom";
-import { GoHeartFill } from "react-icons/go";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -70,6 +70,10 @@ export default function PrimarySearchAppBar() {
       handleMenuClose();
       sessionStorage.removeItem("isLoggedIn");
     }, 1000);
+  };
+
+  const goToMarket = () => {
+    navigate("/market");
   };
 
   const menuId = "primary-search-account-menu";
@@ -154,12 +158,12 @@ export default function PrimarySearchAppBar() {
           <Box sx={{ display: "flex" }}>
             <IconButton
               size="large"
-              aria-label="show favorites"
+              aria-label="show market"
               color="inherit"
               component={Link}
-              to="/favorites"
+              to="/market"
             >
-              <GoHeartFill />
+              <CandlestickChartIcon />
             </IconButton>
             <IconButton
               size="large"
