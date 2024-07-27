@@ -117,7 +117,7 @@ export default function SignUp() {
           </Button>
           <Grid container>
             <Grid item>
-              <NavLink to="/signin" className="text-blue-400">
+              <NavLink to="/login" className="text-blue-500">
                 {"Already have an account? Sign In"}
               </NavLink>
             </Grid>
