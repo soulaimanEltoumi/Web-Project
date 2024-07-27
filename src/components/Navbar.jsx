@@ -93,10 +93,10 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose} component={Link} to="/Log In">
+      <MenuItem onClick={handleMenuClose} component={Link} to="/login">
         Log In
       </MenuItem>
-      <MenuItem onClick={handleMenuClose} component={Link} to="/Signup">
+      <MenuItem onClick={handleMenuClose} component={Link} to="/signup">
         Sign Up
       </MenuItem>
     </Menu>
@@ -141,9 +141,7 @@ export default function PrimarySearchAppBar() {
           <Link to="/" className="text-2xl font-bold">
             <img src={logo} alt="Logo" style={{ height: "40px" }} />
           </Link>
-          {location.pathname === "/" ||
-          location.pathname === "/market" ||
-          location.pathname === "/favourite-list" ? (
+          {location.pathname === "/" || location.pathname === "/market" ? (
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
