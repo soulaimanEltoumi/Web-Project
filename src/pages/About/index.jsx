@@ -9,16 +9,32 @@ export default function About() {
   };
   return (
     <div>
-      <div className="flex flex-row justify-evenly">
-        <ImgMediaCard />
-      </div>
-      <div className="flex justify-center">
-        <button
-          className="w-30 m-5 h-8 rounded bg-blue-500 p-1 text-center text-white"
-          onClick={handleClick}
-        >
-          Go to Homepage
-        </button>
+      <div className="flexbox">
+        <div className="mx-20 my-8">
+          <h1 className="my-10 text-center text-3xl font-bold">About us</h1>
+          <p className="my-10">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sunt vitae
+            ab temporibus sed ducimus, blanditiis at veritatis quos consequuntur
+            exercitationem, assumenda vel, sapiente voluptas ut eligendi rerum.
+            Aspernatur, obcaecati harum.
+          </p>
+        </div>
+        <div className="flexbox">
+          <h2 className="my-6 text-center text-2xl font-semibold">
+            Meet the Team
+          </h2>
+          <div className="flex flex-row justify-evenly">
+            <ImgMediaCard />
+          </div>
+        </div>
+        <div className="flex justify-center">
+          <button
+            className="w-30 m-5 h-8 rounded bg-blue-500 p-1 text-center text-white"
+            onClick={handleClick}
+          >
+            Go to Homepage
+          </button>
+        </div>
       </div>
     </div>
   );
