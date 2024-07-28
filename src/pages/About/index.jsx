@@ -13,10 +13,11 @@ export default function About() {
         <div className="mx-20 my-8">
           <h1 className="my-10 text-center text-3xl font-bold">About us</h1>
           <p className="my-10">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sunt vitae
-            ab temporibus sed ducimus, blanditiis at veritatis quos consequuntur
-            exercitationem, assumenda vel, sapiente voluptas ut eligendi rerum.
-            Aspernatur, obcaecati harum.
+            FINANCE S.M.M is a website dedicated to trading tracking. It offers
+            users the ability to monitor the current market value and stay
+            updated with the latest trading news. Users can easily register with
+            a username and password. Once registered, they can create and manage
+            their own list of favorite trades and edit their personal profile.
           </p>
         </div>
         <div className="flexbox">
