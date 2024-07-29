@@ -13,11 +13,11 @@ import Container from "@mui/material/Container";
 import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
 import bcrypt from "bcryptjs";
-import { useAuth } from "../contexts/AuthContext"; // Import the AuthContext
+import { useAuth } from "../contexts/AuthContext";
 
 export default function LoginForm() {
   const navigate = useNavigate();
-  const { login } = useAuth(); // Get the login function from AuthContext
+  const { login } = useAuth(); // Get the login
   const [message, setMessage] = useState();
 
   const handleSubmit = async (event) => {
@@ -53,8 +53,8 @@ export default function LoginForm() {
 
       setMessage("Login successful");
       sessionStorage.setItem("isLoggedIn", "true");
-      sessionStorage.setItem("userId", user.id); // Store the user ID in session storage
-      login(user); // Log in the user using AuthContext
+      sessionStorage.setItem("userId", user.id);
+      login(user); // Log in using AuthContext
       setTimeout(() => {
         navigate("/");
       }, 1000);
