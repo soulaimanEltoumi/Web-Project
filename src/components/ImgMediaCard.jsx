@@ -23,7 +23,7 @@ export default function ImgMediaCard() {
     },
     {
       id: 3,
-      image: "/images/url.png",
+      image: "src/assets/img1.jpg",
       name: "Soulaiman",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus facilis blanditiis amet in, esse cum fugit omnis deserunt repudiandae quisquam porro pariatur vel ab ex. Quam quod quasi pariatur, necessitatibus non nihil illum, dolorum molestiae dolorem reiciendis cupiditate aliquid beatae sit aut sunt, cumque quae quis reprehenderit saepe possimus! Ipsum.",
