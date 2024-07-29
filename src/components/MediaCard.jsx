@@ -16,7 +16,7 @@ export default function MediaCard({
 }) {
   return (
     <Card sx={{ maxWidth: 345, margin: 5 }}>
-      <CardMedia component="img" alt={name} height="140" image={image} />
+      <CardMedia component="img" alt={name} height="140" src={image} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {name}
