@@ -124,7 +124,7 @@ function CryptoSection() {
       <h2>Crypto Section</h2>
       {error && <p>{error}</p>}
       <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
-        {symbols.slice(0, 10).map((symbol) => (
+        {symbols.slice(0, 12).map((symbol) => (
           <Card key={symbol.symbol} sx={{ maxWidth: 345 }}>
             <CardHeader
               title={

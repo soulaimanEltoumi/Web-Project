@@ -112,7 +112,7 @@ function ForexSection() {
       <h2>Forex Section</h2>
       {error && <p>{error}</p>}
       <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
-        {forexSymbols.slice(0, 10).map((symbol) => (
+        {forexSymbols.slice(0, 12).map((symbol) => (
           <Card key={symbol.symbol} sx={{ maxWidth: 345 }}>
             <CardHeader
               title={
