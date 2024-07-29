@@ -30,7 +30,6 @@ const ProfilePage = () => {
       setUsername(user.username);
       setEmail(user.email);
 
-      // Fetch user's favorite symbols
       fetch(
         `https://json-server-backend-production.up.railway.app/favorites?userId=${user.id}`,
       )
@@ -40,7 +39,6 @@ const ProfilePage = () => {
   }, [user]);
 
   const handleRemoveFavorite = (id) => {
-    // Remove the item from the database
     fetch(
       `https://json-server-backend-production.up.railway.app/favorites/${id}`,
       {
@@ -48,7 +46,6 @@ const ProfilePage = () => {
       },
     ).then((response) => {
       if (response.ok) {
-        // Update the favorites state to remove the item
         setFavorites(favorites.filter((fav) => fav.id !== id));
       } else {
         console.error("Failed to delete the favorite item");
@@ -57,7 +54,6 @@ const ProfilePage = () => {
   };
 
   const handleSaveChanges = () => {
-    // Update the user data in the database
     fetch(
       `https://json-server-backend-production.up.railway.app/users/${user.id}`,
       {
@@ -84,6 +80,7 @@ const ProfilePage = () => {
   };
 
   if (!user) {
+    // This must be fixed and should redirect to the notfound page
     return <div>Loading...</div>;
   }
 

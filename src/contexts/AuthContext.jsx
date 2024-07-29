@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = (userData) => {
     sessionStorage.setItem("isLoggedIn", "true");
-    sessionStorage.setItem("userId", userData.id); // Store the user ID in session storage
+    sessionStorage.setItem("userId", userData.id);
     setUser(userData);
   };
 

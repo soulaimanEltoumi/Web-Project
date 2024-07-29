@@ -13,11 +13,11 @@ import Container from "@mui/material/Container";
 import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
 import bcrypt from "bcryptjs";
-import { useAuth } from "../contexts/AuthContext"; // Import the AuthContext
+import { useAuth } from "../contexts/AuthContext";
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const { login } = useAuth(); // Get the login function from AuthContext
+  const { login } = useAuth(); // Get the login
   const [message, setMessage] = useState();
 
   const handleSubmit = async (event) => {
@@ -49,8 +49,8 @@ export default function SignUp() {
       if (response.status === 201) {
         setMessage("Registration successful");
         sessionStorage.setItem("isLoggedIn", "true");
-        sessionStorage.setItem("userId", response.data.id); // Store the user ID in session storage
-        login(response.data); // Log in the user using AuthContext
+        sessionStorage.setItem("userId", response.data.id);
+        login(response.data); // Log in using AuthContext
         setTimeout(() => {
           navigate("/");
         }, 1000);
