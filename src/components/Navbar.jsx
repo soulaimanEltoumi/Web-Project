@@ -3,6 +3,7 @@ import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
+import CandlestickChartIcon from "@mui/icons-material/CandlestickChart";
 import IconButton from "@mui/material/IconButton";
 import InputBase from "@mui/material/InputBase";
 import MenuItem from "@mui/material/MenuItem";
@@ -10,7 +11,6 @@ import Menu from "@mui/material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { Link, useLocation } from "react-router-dom";
-import { GoHeartFill } from "react-icons/go";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -72,6 +72,10 @@ export default function PrimarySearchAppBar() {
     }, 1000);
   };
 
+  const goToMarket = () => {
+    navigate("/market");
+  };
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -89,10 +93,10 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose} component={Link} to="/Log In">
+      <MenuItem onClick={handleMenuClose} component={Link} to="/login">
         Log In
       </MenuItem>
-      <MenuItem onClick={handleMenuClose} component={Link} to="/Signup">
+      <MenuItem onClick={handleMenuClose} component={Link} to="/signup">
         Sign Up
       </MenuItem>
     </Menu>
@@ -137,9 +141,7 @@ export default function PrimarySearchAppBar() {
           <Link to="/" className="text-2xl font-bold">
             <img src={logo} alt="Logo" style={{ height: "40px" }} />
           </Link>
-          {location.pathname === "/" ||
-          location.pathname === "/market" ||
-          location.pathname === "/favourite-list" ? (
+          {location.pathname === "/" || location.pathname === "/market" ? (
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
@@ -154,12 +156,12 @@ export default function PrimarySearchAppBar() {
           <Box sx={{ display: "flex" }}>
             <IconButton
               size="large"
-              aria-label="show favorites"
+              aria-label="show market"
               color="inherit"
               component={Link}
-              to="/favorites"
+              to="/market"
             >
-              <GoHeartFill />
+              <CandlestickChartIcon />
             </IconButton>
             <IconButton
               size="large"

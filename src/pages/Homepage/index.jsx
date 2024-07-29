@@ -128,24 +128,9 @@ function Homepage() {
     setSelectedSymbol(symbol);
   };
 
-  // Navigate to the Market page
-  const goToMarket = () => {
-    navigate("/market");
-  };
-
   return (
     <div className="p-8">
-      {/* Centered button to navigate to the Market page */}
-      <div className="mb-6 flex justify-center">
-        <button
-          onClick={goToMarket}
-          className="rounded-lg bg-blue-500 px-4 py-2 font-semibold text-white shadow-md hover:bg-blue-600"
-        >
-          Go to Market
-        </button>
-      </div>
-
-      <h1 className="mb-4 text-2xl font-bold">Finnhub Market Data</h1>
+      <h1 className="mb-4 text-2xl font-bold">SMM Market Data</h1>
       {error && <p className="text-red-500">{error}</p>}
       <div className="mb-4">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

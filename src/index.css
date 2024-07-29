@@ -6,4 +6,5 @@
 *::before,
 *::after {
   @apply: border-box;
+  font-family: "Roboto";
 }

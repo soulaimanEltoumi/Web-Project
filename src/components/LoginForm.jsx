@@ -5,7 +5,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -14,10 +13,13 @@ import Container from "@mui/material/Container";
 import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
 import bcrypt from "bcryptjs";
+import { useAuth } from "../contexts/AuthContext"; // Import the AuthContext
 
-export default function SignIn() {
+export default function LoginForm() {
   const navigate = useNavigate();
+  const { login } = useAuth(); // Get the login function from AuthContext
   const [message, setMessage] = useState();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     let data = new FormData(event.currentTarget);
@@ -27,29 +29,35 @@ export default function SignIn() {
     };
     const { username, password } = data;
     if (!username || !password) {
-      setMessage("Username and Password are required");
+      setMessage("All fields are required");
       return;
     }
 
     try {
-      const foundUser = await axios.get(
+      const response = await axios.get(
         `https://json-server-backend-production.up.railway.app/users?username=${username}`,
       );
-      if (!foundUser) {
+
+      if (response.data.length === 0) {
         setMessage("User not found");
         return;
       }
-      const hashedPassword = foundUser.data[0].password;
-      const passwordMatch = bcrypt.compareSync(password, hashedPassword);
-      if (passwordMatch) {
-        setMessage("Login successful");
-        sessionStorage.setItem("isLoggedIn", true);
-        setTimeout(() => {
-          navigate("/");
-        }, 1000);
+
+      const user = response.data[0];
+      const isPasswordValid = bcrypt.compareSync(password, user.password);
+
+      if (!isPasswordValid) {
+        setMessage("Invalid password");
         return;
       }
-      setMessage("Invalid credentials");
+
+      setMessage("Login successful");
+      sessionStorage.setItem("isLoggedIn", "true");
+      sessionStorage.setItem("userId", user.id); // Store the user ID in session storage
+      login(user); // Log in the user using AuthContext
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     } catch (error) {
       console.error(error);
       setMessage("Error occurred");
@@ -107,12 +115,16 @@ export default function SignIn() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <NavLink
+                to="/forgotpassword"
+                variant="body2"
+                className="text-blue-500"
+              >
                 Forgot password?
-              </Link>
+              </NavLink>
             </Grid>
             <Grid item>
-              <NavLink to="/signup" className="text-blue-400">
+              <NavLink to="/signup" className="text-blue-500">
                 {"Don't have an account? Sign Up"}
               </NavLink>
             </Grid>
